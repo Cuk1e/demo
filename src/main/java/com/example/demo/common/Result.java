@@ -14,12 +14,31 @@ public class Result<T> {
         this.data = data;
     }
 
+    // 静态工厂方法: 成功回调
     public static <T> Result<T> success(T data) {
-        return new Result<>(200, "success", data);
+        Result<T> result = new Result<>();
+        result.code = ResultCode.SUCCESS.getCode();
+        result.msg = ResultCode.SUCCESS.getMsg();
+        result.data = data;
+        return result;
     }
 
+    // 静态工厂方法: 失败回调
+    public static <T> Result<T> error(ResultCode resultCode) {
+        Result<T> result = new Result<>();
+        result.code = resultCode.getCode();
+        result.msg = resultCode.getMsg();
+        result.data = null;
+        return result;
+    }
+
+    // 自定义错误码和消息的失败回调
     public static <T> Result<T> error(Integer code, String msg) {
-        return new Result<>(code, msg, null);
+        Result<T> result = new Result<>();
+        result.code = code;
+        result.msg = msg;
+        result.data = null;
+        return result;
     }
 
     public Integer getCode() {
